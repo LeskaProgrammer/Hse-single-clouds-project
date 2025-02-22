@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список задач</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Список задач</h1>
+    <form method="POST">
+        <input type="text" name="task" placeholder="Введите задачу" required>
+        <input type="text" name="author" placeholder="Ваше имя" required>
+        <input type="submit" value="Добавить">
+    </form>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <div class="task-content">
+                    <span class="task-text">{{ task[1] }}</span>
+                    <span class="task-meta">От: {{ task[3] }} | {{ task[2] }}</span>
+                </div>
+                <a href="{{ url_for('delete', task_id=task[0]) }}" class="delete-btn">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
