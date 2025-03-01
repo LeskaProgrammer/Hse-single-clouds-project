@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Замени на более безопасный ключ в реальном проекте
+app.secret_key = 'supersecretkey'
 
 # Настройка Flask-Login
 login_manager = LoginManager()
@@ -21,8 +21,7 @@ db = SQLAlchemy(app)
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)  # Храним пароль в хэше (в реальном проекте используй bcrypt)
-
+    password = db.Column(db.String(120), nullable=False)
 
 # Модель задачи
 class Task(db.Model):
@@ -55,7 +54,7 @@ def register():
         if User.query.filter_by(username=username).first():
             flash('Этот пользователь уже существует!')
             return redirect(url_for('register'))
-        user = User(username=username, password=password)  # В реальном проекте хэшируй пароль
+        user = User(username=username, password=password)
         db.session.add(user)
         db.session.commit()
         flash('Регистрация успешна! Войдите, чтобы продолжить.')
@@ -69,7 +68,7 @@ def login():
         username = request.form['username'].strip()
         password = request.form['password'].strip()
         user = User.query.filter_by(username=username, password=password).first()
-        if user and user.password == password:  # В реальном проекте используй хэширование
+        if user and user.password == password:
             login_user(user)
             return redirect(url_for('index'))
         flash('Неверное имя пользователя или пароль!')

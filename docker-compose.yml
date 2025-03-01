@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8050:5000"
+    volumes:
+      - tasks_db:/app
+
+volumes:
+  tasks_db:
